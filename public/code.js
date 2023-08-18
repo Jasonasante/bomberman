@@ -1,12 +1,12 @@
 import RJNA from "../rjna/engine.js";
-import { playerCard } from "../waitingRoom.js";
-import { movePlayers, placePlayer } from "../players.js";
-import { changeStopValue, startAnimating } from "../script.js";
-import { createMap, generateLevel } from "../mapTemplate.js";
-import { globalSettings } from "../gameSetting.js";
-import { otherLivesContainer } from "../gameState.js";
-import { placePowerUp } from "../powerUps.js";
-import { placeBombAndExplode } from "../bombs.js";
+import { playerCard } from "../components/waitingRoom.js";
+import { movePlayers, placePlayer } from "../components/players.js";
+import { changeStopValue, startAnimating } from "../misc/script.js";
+import { createMap, generateLevel } from "../components/mapTemplate.js";
+import { globalSettings } from "../misc/gameSetting.js";
+import { otherLivesContainer } from "../components/gameState.js";
+import { placePowerUp } from "../components/powerUps.js";
+import { placeBombAndExplode } from "../components/bombs.js";
 
 export let socket;
 let uname;

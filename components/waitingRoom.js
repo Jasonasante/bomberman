@@ -1,5 +1,5 @@
-import RJNA from "./rjna/engine.js";
-import { globalSettings } from "./gameSetting.js";
+import RJNA from "../rjna/engine.js";
+import { globalSettings } from "../misc/gameSetting.js";
 
 function imageBackground(number) {
   switch (number) {

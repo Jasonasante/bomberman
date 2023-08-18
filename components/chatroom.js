@@ -1,4 +1,4 @@
-import RJNA from "./rjna/engine.js";
+import RJNA from "../rjna/engine.js";
 
 export const chatroom = RJNA.tag.div({ class: "main-app" }, {}, {},
   RJNA.tag.div({ class: "screen chat-screen" }, {}, {},

@@ -1,5 +1,5 @@
-import { globalSettings } from "./gameSetting.js";
-import RJNA from "./rjna/engine.js";
+import { globalSettings } from "../misc/gameSetting.js";
+import RJNA from "../rjna/engine.js";
 const template = [
   ['▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉', '▉'],
   ['▉', 'x', 'l', , , , , , , , , , 'l', 'y', '▉'],

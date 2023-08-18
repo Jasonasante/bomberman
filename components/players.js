@@ -1,23 +1,19 @@
-import { globalSettings } from "./gameSetting.js";
-import RJNA from "./rjna/engine.js";
+import { globalSettings } from "../misc/gameSetting.js";
+import RJNA from "../rjna/engine.js";
 import {
   leftPressed,
   rightPressed,
   upPressed,
   downPressed,
   pickUp,
-  speedPressed,
-  flamesPressed,
-  bombsPressed,
   falseKeyBool,
   bombDropped,
-} from "./input.js";
+} from "../misc/input.js";
 import {
   checkWallCollision,
   touchPowerUp,
   touchExplosion
-} from "./collision.js";
-import { startAnimating } from "./script.js";
+} from "../misc/collision.js";
 
 export function placePlayer(number, character, username) {
   let topPosition =
@@ -57,7 +53,6 @@ export function PlayerMovement(socket) {
     myPlayerNum: socket.playerCount,
     row: orbital["players"][`${socket.playerCount}`]["row"],
     col: orbital["players"][`${socket.playerCount}`]["col"],
-    speed: orbital["players"][`${socket.playerCount}`]["speed"] || globalSettings.speed.normal,
     flames: orbital["players"][`${socket.playerCount}`]["flames"] || globalSettings.flames.normal,
     bombs: orbital["players"][`${socket.playerCount}`]["bombs"] || globalSettings.bombs.normal,
   };
@@ -72,27 +67,27 @@ export function PlayerMovement(socket) {
   // move when the button is pressed and the next block is empty
   if (
     leftPressed &&
-    !checkWallCollision("left", socket.playerCount, moving.speed)
+    !checkWallCollision("left", socket.playerCount, orbital["players"][`${socket.playerCount}`]["speed"])
   ) {
-    moving.col = parseFloat((moving.col - moving.speed).toFixed(2));
+    moving.col = parseFloat((moving.col - orbital["players"][`${socket.playerCount}`]["speed"]).toFixed(2));
     socket.emit("player-movement", moving);
   } else if (
     rightPressed &&
-    !checkWallCollision("right", socket.playerCount, moving.speed)
+    !checkWallCollision("right", socket.playerCount, orbital["players"][`${socket.playerCount}`]["speed"])
   ) {
-    moving.col = parseFloat((moving.col + moving.speed).toFixed(2));
+    moving.col = parseFloat((moving.col + orbital["players"][`${socket.playerCount}`]["speed"]).toFixed(2));
     socket.emit("player-movement", moving);
   } else if (
     upPressed &&
-    !checkWallCollision("up", socket.playerCount, moving.speed)
+    !checkWallCollision("up", socket.playerCount, orbital["players"][`${socket.playerCount}`]["speed"])
   ) {
-    moving.row = parseFloat((moving.row - moving.speed).toFixed(2));
+    moving.row = parseFloat((moving.row - orbital["players"][`${socket.playerCount}`]["speed"]).toFixed(2));
     socket.emit("player-movement", moving);
   } else if (
     downPressed &&
-    !checkWallCollision("down", socket.playerCount, moving.speed)
+    !checkWallCollision("down", socket.playerCount, orbital["players"][`${socket.playerCount}`]["speed"])
   ) {
-    moving.row = parseFloat((moving.row + moving.speed).toFixed(2));
+    moving.row = parseFloat((moving.row + orbital["players"][`${socket.playerCount}`]["speed"]).toFixed(2));
     socket.emit("player-movement", moving);
   }
   if (pickUp) {
@@ -129,67 +124,9 @@ export function PlayerMovement(socket) {
   }
 }
 
-export function PowerUp(socket) {
-  let moving = {
-      myPlayerNum: socket.playerCount,
-      speed: orbital["players"][`${socket.playerCount}`]["speed"] || globalSettings.speed.normal,
-      flames: orbital["players"][`${socket.playerCount}`]["flames"] || globalSettings.flames.normal,
-      bombs: orbital["players"][`${socket.playerCount}`]["bombs"] || globalSettings.bombs.normal,
-  };
-  let playerPowerUpsArr = orbital["players"][moving.myPlayerNum]["power-ups"];
-  if (speedPressed) {
-      falseKeyBool("speed-pressed");
-      if (
-          playerPowerUpsArr.indexOf("speed") !== -1
-      ) {
-          moving.speed = globalSettings.speed.fast;
-          playerPowerUpsArr.splice(playerPowerUpsArr.indexOf("speed"), 1);
-          setTimeout(() => {
-              const revert = {
-                  myPlayerNum: socket.playerCount,
-                  speed: globalSettings.speed.normal,
-              };
-              socket.emit("player-movement", revert);
-          }, 10000);
-          let amountOfPowerUp = playerPowerUpsArr.filter(
-              (power) => power === "speed"
-          ).length;
-          document.querySelector(`.speed-amount`).innerHTML = amountOfPowerUp;
-      }
-  }
-  if (flamesPressed) {
-      falseKeyBool("flames-pressed");
-      if (playerPowerUpsArr.indexOf("flames") !== -1) {
-          if (moving.flames === globalSettings.flames.normal) {
-              moving.flames = globalSettings.flames.pickUp1;
-          } else if (moving.flames === globalSettings.flames.pickUp1) {
-              moving.flames = globalSettings.flames.pickUp2;
-          } else if (moving.flames === globalSettings.flames.pickUp2) {
-              moving.flames = globalSettings.flames.pickUp3;
-          }
-          playerPowerUpsArr.splice(playerPowerUpsArr.indexOf("flames"), 1);
-          let amountOfPowerUp = playerPowerUpsArr.filter(
-              (power) => power === "flames"
-          ).length;
-          document.querySelector(`.flames-amount`).innerHTML = amountOfPowerUp;
-      }
-  }
 
-  if (bombsPressed) {
-      falseKeyBool("bombs-pressed");
-      if (playerPowerUpsArr.indexOf("bombs") !== -1) {
-          orbital["players"][moving["myPlayerNum"]]["numOfBombs"]++
-          playerPowerUpsArr.splice(playerPowerUpsArr.indexOf("bombs"), 1);
-          let amountOfPowerUp = playerPowerUpsArr.filter(
-              (power) => power === "bombs"
-          ).length;
-          document.querySelector(`.bombs-amount`).innerHTML = amountOfPowerUp;
-      }
-  }
-}
 
 export function movePlayers() {
-  // console.log(orbital)
   for (let [playerNum, playerObj] of Object.entries(orbital.players)) {
     document.querySelector(`.player-${playerNum}`).style.top =
       playerObj.row * globalSettings.wallHeight +

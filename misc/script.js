@@ -1,6 +1,7 @@
-import { PlayerMovement, movePlayers, PowerUp } from "./players.js";
-import { socket } from "./public/code.js";
+import { PlayerMovement, movePlayers,} from "../components/players.js";
+import { socket } from "../public/code.js";
 import { gameOver } from "./lives.js";
+import { ActivatePowerUp } from "../components/powerUps.js";
 
 export let currentLevel;
 
@@ -53,9 +54,9 @@ function animate(newtime) {
       if (duration%10==0){
         PlayerMovement(socket);
       }
+      ActivatePowerUp(socket)
       movePlayers()
       duration++
-      PowerUp(socket)
       throttle(gameOver(socket),50)
     }
   }

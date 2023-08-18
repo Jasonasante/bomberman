@@ -1,8 +1,8 @@
 import { chatroom } from "./chatroom.js";
-import { globalSettings } from "./gameSetting.js";
+import { globalSettings } from "../misc/gameSetting.js";
 import { hearts } from "./gameState.js";
 import { waitingRoomGrid } from "./waitingRoom.js"
-import RJNA from "./rjna/engine.js";
+import RJNA from "../rjna/engine.js";
 // -- Live updates of current game events -- //
 export const gameUpdatesContainer = RJNA.tag.div(
   { class: "game-updates-container" },

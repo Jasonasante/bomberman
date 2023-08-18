@@ -39,7 +39,7 @@ export const globalSettings = {
         wario: "https://66.media.tumblr.com/a5dc6a16fe07f56389d959e9da5f599f/tumblr_mugvnijgKx1rfjowdo1_500.gif"
     },
     speed: {
-        normal: 0.5,
+        normal: 0.33,
         fast: 1,
     },
     flames: {

@@ -1,6 +1,6 @@
-import RJNA from "./rjna/engine.js";
-import { congratulationsContainer, layoutContainer, waitingRoom } from "./gameContainer.js";
-import { runChatroom } from "./public/code.js";
+import RJNA from "../rjna/engine.js";
+import { congratulationsContainer, layoutContainer, waitingRoom } from "../components/gameContainer.js";
+import { runChatroom } from "./code.js";
 
 function openGame() {
     return new Promise((resolve) => {

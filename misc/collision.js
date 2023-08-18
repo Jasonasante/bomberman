@@ -1,5 +1,5 @@
 import { globalSettings } from "./gameSetting.js";
-import { createNode } from "./rjna/engine.js";
+import { createNode } from "../rjna/engine.js";
 export function checkCollision(player, objectDOMRect) {
   // https://youtu.be/r0sy-Cr6WHY?t=327
   if (

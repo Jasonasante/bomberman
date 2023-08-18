@@ -1,5 +1,3 @@
-import { changeStopValue } from "./script.js";
-
 let checkLives = false
 export function gameOver(socket) {
     const playersWithLives = [];

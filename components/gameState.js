@@ -1,4 +1,4 @@
-import RJNA from "./rjna/engine.js"
+import RJNA from "../rjna/engine.js"
 
 //    --- create the hearts (the remaining lives) for players  --- //
 export const hearts = (livesRemaining) => {
