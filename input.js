@@ -13,6 +13,19 @@ document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 
 export function keyDownHandler(e) {
+    // if (e.repeat) {
+    //     rightPressed = false,
+    //         leftPressed = false,
+    //         upPressed = false,
+    //         downPressed = false,
+    //         pickUp = false,
+    //         speedPressed = false,
+    //         flamesPressed = false,
+    //         bombsPressed = false,
+    //         bombDropped = false;
+    //     console.log("here")
+    //     return
+    // } 
     if (e.key == 'Right' || e.key == 'ArrowRight') {
         rightPressed = true;
     } else if (e.key == 'Left' || e.key == 'ArrowLeft') {
@@ -44,7 +57,7 @@ export function keyUpHandler(e) {
     } else if (e.key == "d") {
         //active bombs power up
         bombsPressed = true;
-    }else if (e.key == "w"){
+    } else if (e.key == "w") {
         bombDropped = true;
     }
 }

@@ -1,4 +1,4 @@
-import { PlayerMovement } from "./players.js";
+import { PlayerMovement, movePlayers, PowerUp } from "./players.js";
 import { socket } from "./public/code.js";
 import { gameOver } from "./lives.js";
 
@@ -14,6 +14,7 @@ let fps = 60,
   now,
   then,
   elapsed;
+  let duration = 0;
 
 export function startAnimating(fps) {
   fpsInterval = 1000 / fps;
@@ -48,12 +49,47 @@ function animate(newtime) {
     // draw stuff here
 
     // draw player movement
-    if (socket != null)
-      PlayerMovement(socket);
-    gameOver(socket)
+    if (socket != null){
+      if (duration%10==0){
+        PlayerMovement(socket);
+      }
+      movePlayers()
+      duration++
+      PowerUp(socket)
+      throttle(gameOver(socket),50)
+    }
   }
 }
 
 export function changeStopValue() {
   stop = true;
+}
+export const debounce = (func, wait) => {
+	let debounceTimer
+	return function (eve) {
+	  const context = this
+	  const args = arguments
+	  clearTimeout(debounceTimer)
+	  debounceTimer = setTimeout(() => func.apply(context, args), wait)
+	  return debounceTimer
+	}
+  }
+
+function throttle(fn, threshold) {
+  threshold = threshold || 16.67 *3;
+  var last, deferTimer;
+
+  return function() {
+      var now = +new Date, args = arguments;
+      if(last && now < last + threshold) {
+          clearTimeout(deferTimer);
+          deferTimer = setTimeout(function() {
+              last = now;
+              fn.apply(this, args);
+          }, threshold);
+      } else {
+          last = now;
+          fn.apply(this, args);
+      }
+  }
 }

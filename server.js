@@ -125,7 +125,7 @@ io.on("connection", function (socket) {
 			stopGameCountdown();
 		}
 		socket.broadcast.emit("remove-waiting-player", socket.playerCount)
-		if (gameStarted && socket.playerCount!=undefined){
+		if (gameStarted && socket.playerCount != undefined) {
 			socket.broadcast.emit("remove-player", socket.playerCount)
 		}
 
